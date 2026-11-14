@@ -1,0 +1,110 @@
+{
+  "version": 3,
+  "board": "nano-expansion-v1",
+  "name": "Kiểm tra nhập Blockly",
+  "devices": [
+    {
+      "id": "ultrasonic",
+      "type": "ultrasonic",
+      "port": "J14"
+    },
+    {
+      "id": "soil",
+      "type": "soil",
+      "port": "J8"
+    },
+    {
+      "id": "led",
+      "type": "led",
+      "port": "J1"
+    },
+    {
+      "id": "pump",
+      "type": "pump",
+      "port": "J15-A"
+    },
+    {
+      "id": "fan",
+      "type": "fan",
+      "port": "J15-B"
+    }
+  ],
+  "workspace": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "es_start",
+          "id": "start-root",
+          "x": 35,
+          "y": 25
+        },
+        {
+          "type": "es_forever",
+          "id": "forever-root",
+          "x": 35,
+          "y": 125,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "es_led",
+                "fields": {
+                  "DEVICE": "led",
+                  "ACTION": "ON"
+                },
+                "next": {
+                  "block": {
+                    "type": "es_wait",
+                    "fields": {
+                      "UNIT": "SECONDS"
+                    },
+                    "inputs": {
+                      "TIME": {
+                        "shadow": {
+                          "type": "math_number",
+                          "fields": {
+                            "NUM": 1
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "es_led",
+                        "fields": {
+                          "DEVICE": "led",
+                          "ACTION": "OFF"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "es_wait",
+                            "fields": {
+                              "UNIT": "SECONDS"
+                            },
+                            "inputs": {
+                              "TIME": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "fields": {
+                                    "NUM": 1
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "view": {
+    "scale": 0.85
+  }
+}

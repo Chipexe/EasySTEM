@@ -1,0 +1,9 @@
+import { deviceTypes, portLabel } from './editor.board.js';
+import { icon } from '../../components/icons.js';
+export function renderMonitor(container,devices,sample,onSampleChange,live=null,onRead=()=>{}) {
+ const sensors=devices.filter(d=>deviceTypes[d.type].sensor);
+ const connected=!!live?.connected;
+ container.innerHTML=`<div class="ed-panel-heading"><h2>📊 Giá trị cảm biến</h2><span class="ed-mode-label">${sample?'Dữ liệu mẫu':connected?'Dữ liệu USB':'Chưa có dữ liệu'}</span></div><p class="ed-connection"><i></i> ${connected?'Đã kết nối mạch':'Chưa kết nối thiết bị'}</p><div class="ed-sensor-list">${sensors.length?sensors.map(d=>{const t=deviceTypes[d.type],packet=live?.samples?.[d.id];const valid=connected&&packet?.port===d.port&&Number.isFinite(packet?.value)&&Date.now()-packet.receivedAt<2000;return `<article class="ed-sensor-card"><div class="ed-sensor-heading"><span>${t.emoji}</span><div><h3>${t.name}</h3><small>${portLabel(d.port)}</small></div></div><p class="ed-sensor-value">${sample?t.sample:valid?Math.round(packet.value*100)/100:'—'} <small>${t.unit||'digital'}</small></p><span class="ed-sensor-caption">${sample?'Giá trị minh họa, không phải số đo thật':valid?'Số đo nhận từ mạch qua USB':'Chưa nhận số đo mới; kiểm tra chương trình đã nạp'}</span></article>`;}).join(''):'<p class="ed-empty">Thêm cảm biến ở ô khai báo để hiển thị giá trị tại đây.</p>'}</div><div class="ed-monitor-footer"><button class="btn btn-outline btn-full" id="ed-read-usb" ${live?.busy?'disabled':''}>${icon('play')} ${connected?'Ngắt kết nối USB':'Kết nối để đọc'}</button><button class="ed-text-button" id="ed-toggle-sample" aria-pressed="${sample}">${sample?'Ẩn dữ liệu mẫu':'Xem dữ liệu mẫu'}</button><p>ⓘ Số đo cần chương trình EasySTEM trên Nano. Dữ liệu mẫu không điều khiển mạch.</p></div>`;
+ container.querySelector('#ed-toggle-sample').onclick=()=>onSampleChange(!sample);
+ container.querySelector('#ed-read-usb').onclick=onRead;
+}

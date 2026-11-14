@@ -1,0 +1,10 @@
+node_modules/
+vendor/blockly/
+*.log
+.env
+.env.*
+!.env.example
+connector/resources/arduino/
+connector/release/
+connector/.test-data/
+connector/.build-cache/

@@ -1,0 +1,14 @@
+:root {
+  --ink: #132452;
+  --muted: #657494;
+  --blue: #146bfa;
+  --purple: #8950ee;
+  --orange: #ff8816;
+  --green: #20b765;
+  --line: #e0e9fa;
+  --surface: #fff;
+  --canvas: #f4f8ff;
+  --radius: 24px;
+  --shadow: 0 6px 22px #3a71b512;
+  --font: 'Nunito', 'Segoe UI', sans-serif;
+}

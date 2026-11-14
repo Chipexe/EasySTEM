@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=path.resolve(fileURLToPath(new URL('../',import.meta.url)));
+const source=path.join(root,'node_modules/blockly'),target=path.join(root,'vendor/blockly');
+fs.mkdirSync(path.join(target,'msg'),{recursive:true});
+for(const name of ['blockly_compressed.js','blocks_compressed.js','msg/vi.js'])fs.copyFileSync(path.join(source,name),path.join(target,name));
+fs.cpSync(path.join(source,'media'),path.join(target,'media'),{recursive:true});
+const pkg=JSON.parse(fs.readFileSync(path.join(source,'package.json'),'utf8'));
+fs.writeFileSync(path.join(target,'LICENSE.txt'),`Blockly ${pkg.version}\nApache License 2.0\nhttps://github.com/RaspberryPiFoundation/blockly\n\n${fs.readFileSync(path.join(source,'LICENSE'),'utf8')}`);
+console.log(`Prepared local Blockly ${pkg.version} assets.`);
